@@ -20,30 +20,41 @@ if __name__ == '__main__':
         subprocess.run(["ffmpeg", "-version"], stdout=subprocess.PIPE)
 
     except FileNotFoundError:
-        print(
-            "\033[31;1m"
-            "FFmpeg was not installed or was not found.\n"
-            "If you have the program, enter the path below to add it to the system variable."
-            "\033[m"
-        )
-        print(
-            "\033[33;1m"
-            "Don't include the executable, only the folder where it is located."
-            "\033[m"
-        )
-        print(
-            "\033[1m"
-            "Link to Download for windows 64-bit\033[m:"
-            "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/"
-            "FFmpeg-master-latest-win64-gpl-shared.zip"
-        )
+        if os.name == "nt":
+            print(
+                "\033[31;1m"
+                "FFmpeg was not installed or was not found.\n"
+                "If you have the program, enter the path below to add it to the system variable."
+                "\033[m"
+            )
+            print(
+                "\033[33;1m"
+                "Don't include the executable, only the folder where it is located."
+                "\033[m"
+            )
+            print(
+                "\033[1m"
+                "Link to Download for windows 64-bit\033[m:"
+                "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/"
+                "FFmpeg-master-latest-win64-gpl-shared.zip"
+            )
 
-        path = input("Path: ")
-        
-        subprocess.run(['python', os.path.abspath('config_ffmpeg.py'), path])
-        print('\033[33mAfter the process, restart the terminal to update the new environment variable\033[m')
-        sleep(2)
-        exit()
+            path = input("Path: ")
+
+            subprocess.run(['python', os.path.abspath('config_ffmpeg.py'), path])
+            print('\033[33mAfter the process, restart the terminal to update the new environment variable\033[m')
+            sleep(2)
+            exit()
+            
+        else:
+            print(
+                "\033[33:1m"
+                "FFmpeg was not installed or was not found.\n"
+                "If you have the program, you need add it to the system variable."
+                "\033[m"
+            )
+            print('\033[33;1mAfter the process, restart the terminal to update the new environment variable\033[m')
+            exit()
 
     # -----------------------------------------------------------------------------------
     # STARTING
@@ -79,7 +90,7 @@ Playlist detected, Downlaod the entire playlist?
 1 - Sim
 2 - Não
 """
-        )
+            )
             tipo = only_numeric_input("\033[31m>>>\033[m ")
 
     if tipo == 1:
@@ -102,7 +113,7 @@ Playlist detected, Downlaod the entire playlist?
 1 - Downlaod video
 2 - download audio
 """
-    )
+        )
         user = only_numeric_input("\033[31m>>>\033[m ")
 
     # -----------------------------------------------------------------------------------
