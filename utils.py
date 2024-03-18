@@ -1,21 +1,23 @@
 from pydub import AudioSegment
 from mutagen.easyid3 import EasyID3
 import os
-import ctypes
 
 
 PATH_MUSIC = os.path.join(os.environ["USERPROFILE"], "Music", "Youtube download")
 PATH_VIDEO = os.path.join(os.environ["USERPROFILE"], "Videos", "Youtube download")
 
+def title() -> None:
+    print('=-'*10, "Baixe\033[31mTube\033[m", '=-'*10, "\n")
 
-def baixar_video(video):
+
+def download_video(video) -> None:
     st = video.streams.filter(progressive=True)
     video = st.get_highest_resolution()
     
     video.download(PATH_VIDEO)
 
 
-def baixar_audio(audio_st):
+def download_audio(audio_st) -> None:
     audio = audio_st.streams.get_audio_only()
 
     name = audio.default_filename[:-3]+"mp3"
@@ -29,8 +31,15 @@ def baixar_audio(audio_st):
     tag.save()
 
 
-def is_admin():
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
+def only_numeric_input(text: str) -> int:
+    while True:
+        t: str = input(text)
+        if t.isnumeric():
+            return int(t)
+        
+        print(
+            "\033[33;1m"
+            "Plese enter only numeric value"
+            "\033[m"
+        )
+        

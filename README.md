@@ -31,7 +31,7 @@ Tested libraries and versions:
    Use he following command to clone the project repository to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/your-project.git
+   git clone https://github.com/ol1rum/BaixeTube.git
    ```
 
 2. **Install the Dependeces**
@@ -59,5 +59,8 @@ Tested libraries and versions:
    - if there's a playlist or a video within a playlist, the program will ask if you want to download the entire playlist or just the video.
    - additionally, it will inquire whether you want to download only the audio or the complete video.
 
-# License
+## License
+   
+   This project is licensed under the **GNU General Public License vesion 3 (GPLv3)**.
+   Please refer to the LICENSE file for more details.
 

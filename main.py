@@ -8,7 +8,7 @@ import subprocess, os
 
 tipo = 0
 user = 0
-sair = 0
+
 
 if __name__ == '__main__':
 
@@ -21,20 +21,21 @@ if __name__ == '__main__':
 
     except FileNotFoundError:
         print(
-            "\033[31;1m \
-            FFmpeg was not installed or was not found.\n \
-            If you have the program, enter the path below to add it to the system variable.\
-            \033[m"
+            "\033[31;1m"
+            "FFmpeg was not installed or was not found.\n"
+            "If you have the program, enter the path below to add it to the system variable."
+            "\033[m"
         )
         print(
-            "\033[33;1m\
-            Don't include the executable, only the folder where it is located.\
-            \033[m"
+            "\033[33;1m"
+            "Don't include the executable, only the folder where it is located."
+            "\033[m"
         )
         print(
-            "\033[1m\
-            Link to Download for windows 64-bit\033[m: \
-            https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/FFmpeg-master-latest-win64-gpl-shared.zip"
+            "\033[1m"
+            "Link to Download for windows 64-bit\033[m:"
+            "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/"
+            "FFmpeg-master-latest-win64-gpl-shared.zip"
         )
 
         path = input("Path: ")
@@ -48,17 +49,17 @@ if __name__ == '__main__':
     # STARTING
     # -----------------------------------------------------------------------------------
 
-    print('=-'*10, "Baixe\033[31mTube\033[m", '=-'*10)
+    title()
     while True:
         try:
-            link = str(input("Link Para Baixar: "))
+            link = str(input("Link to downlaod: "))
             if "list" in link or "playlist" in link:
                 Playlist(link)
             else:
                 YouTube(link)
             break
         except RegexMatchError:
-            print("\033[31;1mLINK INVÁLIDO\033[m")
+            print("\033[31;1mINVALID LINK\033[m")
 
     # -----------------------------------------------------------------------------------
     # VERIFYING IF THERE IS A PLAYLIST
@@ -66,18 +67,20 @@ if __name__ == '__main__':
 
     if "playlist" in link:
         tipo = 1
-        print("\n\033[1mUsando Playlist\033[m")
 
     elif "list" in link:
-        print(
+        while tipo not in [1, 2]:
+            print('\n'*50)
+            title()
+
+            print(
 """
-Playlist detectada, Baixar playlist completa?
+Playlist detected, Downlaod the entire playlist?
 1 - Sim
 2 - Não
 """
         )
-        while tipo not in [1, 2]:
-            tipo = int(input("\033[31m>>>\033[m "))
+            tipo = only_numeric_input("\033[31m>>>\033[m ")
 
     if tipo == 1:
         yt = Playlist(link)
@@ -88,14 +91,19 @@ Playlist detectada, Baixar playlist completa?
     # DOWNLOAD AUDIO OR VIDEO
     # -----------------------------------------------------------------------------------
 
-    print(
+    while user not in [1, 2]:
+        print('\n'*50)
+        title()
+        if "playlist" in link:
+            print("\033[1mUsing playlist\033[m")  
+            
+        print(
 """
-1 - Baixar vídeo
-2 - Baixar audio
+1 - Downlaod video
+2 - download audio
 """
     )
-    while user not in [1, 2]:
-        user = int(input("\033[31m>>>\033[m "))
+        user = only_numeric_input("\033[31m>>>\033[m ")
 
     # -----------------------------------------------------------------------------------
     # INICIATE DOWNLOAD
@@ -104,23 +112,23 @@ Playlist detectada, Baixar playlist completa?
     if tipo == 1:
 
         if user  == 1:
-            print(f"Baixando {len(yt)} vídeos...")  #type: ignore
+            print(f"Downloading {len(yt)} videos...")  #type: ignore
             for n, v in enumerate(yt.videos):  #type: ignore
-                baixar_video(v)
+                download_video(v)
                 print(f"{n+1}/{len(yt)}")  #type: ignore
 
         else:
-            print(f"Baixando audio de {len(yt)} vídeos...")  #type: ignore
+            print(f"Downloading {len(yt)} audios from videos...")  #type: ignore
             for n, a in enumerate(yt.videos):  #type: ignore
-                baixar_audio(a)
+                download_audio(a)
                 print(f"{n+1}/{len(yt)}")  #type: ignore
 
 
     elif user == 1:
-        baixar_video(yt)
+        download_video(yt)
 
     elif user == 2:
-        baixar_audio(yt)
+        download_audio(yt)
 
 
-    print("\033[32;1mDONWLOAD CONCLUíDO\033[m")
+    print("\033[32;1mDONWLOAD COMPLETE\033[m")
